@@ -1,4 +1,4 @@
-## Cloud Swift with AWS
+## Cloud Swift with AWS Lambda
 
 
 Arek Turlewicz
