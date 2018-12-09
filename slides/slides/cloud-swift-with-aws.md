@@ -20,7 +20,7 @@ Code transfigurator at MediWeb, Inc.
 
 ## What is AWS Lambda?
 
-![lambda-in-the-cloud](../lambda-1a.png)
+![lambda-in-the-cloud](lambda-1a.png)
 
 ---
 
@@ -41,7 +41,7 @@ Code transfigurator at MediWeb, Inc.
 
 ## What is AWS Lambda?
 
-![lambda-in-the-cloud2](../lambda-1b.png)
+![lambda-in-the-cloud2](lambda-1b.png)
 
 ---
 
@@ -156,7 +156,7 @@ open cmdFoo.xcodeproj
 
 ---
 
-![lambda-in-the-cloud](../lambda-2a.png)
+![lambda-in-the-cloud](lambda-2a.png)
 
 ---
 
@@ -200,8 +200,8 @@ done
 
 ## Compile Swift program
 
-### deploy.sh    
-```                                                                                 
+### deploy.sh
+```
 #!/bin/bash
 set -e
 export PATH=/opt/swift-4.1/usr/bin:"${PATH}"
