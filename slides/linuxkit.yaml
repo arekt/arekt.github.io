@@ -1,0 +1,32 @@
+
+
+Introduction:
+  What is LinuxKit?
+    Toolkit to Build immutable (kernel + filesystem)
+
+  LinuxKit components:
+    RunC
+    ContainerD
+
+  LinuxKit configuration:
+    It's just yaml file
+    Services
+    Init
+    Everything is based on docker containers
+
+  LinuxKit default targets:
+    RaspperryPi3
+    AWS EC2
+    Baremetal
+      Arm64
+      AMD64
+  Use cases:
+    If you are lucky? (Your target device is supported)
+  If you are less lucky:
+    Add support to your device
+    LinuxKit has a lot of usefull tools:
+      Scripts to extract mainstream kernels
+    Do you need to use it in production or for your development env?
+    Create your dev environment for Mac
+
+
