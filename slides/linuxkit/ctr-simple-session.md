@@ -24,3 +24,18 @@ done
 
 If you don't like command line, you can use go to programmatically interact with containerd.
 Check this out: https://containerd.io/docs/getting-started/
+
+## Containerd functions
+
+https://chromium.googlesource.com/external/github.com/docker/containerd/
+
+```
+execution - Provide an extensible execution layer for executing a container
+cow filesystem - Built in functionality for overlay, aufs, and other copy on write filesystems for containers
+distribution - Having the ability to push and pull images as well as operations on images as a first class API object
+metrics - container-level metrics, cgroup stats, and OOM events
+networking - creation and management of network interfaces
+build - Building images as a first class API
+volumes - Volume management for external data
+logging - Persisting container logs
+```
