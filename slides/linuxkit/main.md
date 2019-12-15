@@ -115,6 +115,9 @@ docker build -t hello_world  .
 - https://github.com/linuxkit/linuxkit/issues/2128
 - https://github.com/gw0/docker-alpine-kernel-modules
 - https://www.ianlewis.org/en/container-runtimes-part-3-high-level-runtimes
+  # cross building images
+- https://community.arm.com/developer/tools-software/tools/b/tools-software-ides-blog/posts/getting-started-with-docker-for-arm-on-linux
+- https://medium.com/@carlosedp/cross-building-arm64-images-on-docker-desktop-254d1e0bc1f9
 
 ### other links
   # Namespaces
@@ -132,3 +135,4 @@ docker build -t hello_world  .
 - https://qiita.com/myasu/items/e3f81b2826ed5797a040
 - http://wiringpi.com/wiringpi-deprecated/
 - https://packages.ubuntu.com/eoan/libwiringpi2
+- https://github.com/containerd/containerd/blob/master/docs/rootless.md
