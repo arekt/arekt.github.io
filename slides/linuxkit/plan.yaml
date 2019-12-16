@@ -1,8 +1,9 @@
 
 
 Introduction:
-  What is LinuxKit?
-    Toolkit to Build immutable (kernel + filesystem)
+    What is LinuxKit?:
+        Toolkit to Build immutable (kernel + filesystem)
+    
 
   LinuxKit components:
     RunC
@@ -14,19 +15,36 @@ Introduction:
     Init
     Everything is based on docker containers
 
+    input ( YAML Configuration )  ->  [Downloading containers with parts of the filesystem]  ->  output ( filesysytem + kernel + bios )
+
   LinuxKit default targets:
     RaspperryPi3
     AWS EC2
-    Baremetal
+    Baremetal 
       Arm64
       AMD64
-  Use cases:
-    If you are lucky? (Your target device is supported)
-  If you are less lucky:
-    Add support to your device
-    LinuxKit has a lot of usefull tools:
-      Scripts to extract mainstream kernels
-    Do you need to use it in production or for your development env?
-    Create your dev environment for Mac
+
+  How to use it:  
+
+    $ linuxkit build linuxkit.yml
+    $ linuxkt run linuxkit.yml
+
+  From where take configuration:
+
+    https://github.com/linuxkit/linuxkit/tree/master/examples
+
+
+  What if your hardware is not supported?:
+    - Add support to your device
+    - mostly it's just bunch of Dockerfile configurations
+    - and little bit go code
+
+  What if you don't want to add new hardware?:  
+   - It's still pretty good thing to learn about Docker, Linux and Security
+   - Scripts to extract mainstream kernels
+   - It could be useful as developer tool 
+   - Or part of the current development cicle
+
+
 
     

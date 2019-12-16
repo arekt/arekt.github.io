@@ -26,17 +26,17 @@ didn't like overlayfs
 
 ```
 # /mnt/data/ubu-dev/usr/local/bin/ctr -n foo images pull docker.io/library/redis:alpine
-docker.io/library/redis:alpine:                                                   resolved       |++++++++++++++++++++++++++++++++++++++|
-index-sha256:ee13953704783b284c080b5b0abe4620730728054f5c19e9488d7a97ecd312c5:    done           |++++++++++++++++++++++++++++++++++++++|
-manifest-sha256:7b18da3a57b32a6601d64b22f622aacb9d58b71acdddca19fedafa0692a81ce2: done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:a394895c0ea179c6d15fb9123554ddc64f0f2009528a05658050c84562f75b63:    done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:6773b0f0199132543bff53a7e2a21d60520b963aaf6a3127055e7a53c60d6e83:    done           |++++++++++++++++++++++++++++++++++++++|
-config-sha256:048d80034387d60575b61563b55ecc92a47bd0f8ecda65fa8c6a22b8763e269d:   done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:268833695a7b800774f9f43ca8b6a8d5e593ad141625362713624a22a4ea0144:    done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:99fc70ac0b64db67086f98ceb3942600816eed98046abd6be5ad66f4614a9ca2:    done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:ee68a0599dc5b5a7923eceeeb11438ca200b59261c8c2d8015596a2c7cf97164:    done           |++++++++++++++++++++++++++++++++++++++|
-layer-sha256:00d2426102087e5a411419f35c9ce1a258f79d89957ccaa4143b5b3d448b44f4:    done           |++++++++++++++++++++++++++++++++++++++|
-elapsed: 74.7s                                                                    total:  396.7  (5.3 KiB/s)
+docker.io/library/redis:alpine:                                                   resolved       |++++++++++++++++++++++++++++++++++++++| 
+index-sha256:ee13953704783b284c080b5b0abe4620730728054f5c19e9488d7a97ecd312c5:    done           |++++++++++++++++++++++++++++++++++++++| 
+manifest-sha256:7b18da3a57b32a6601d64b22f622aacb9d58b71acdddca19fedafa0692a81ce2: done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:a394895c0ea179c6d15fb9123554ddc64f0f2009528a05658050c84562f75b63:    done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:6773b0f0199132543bff53a7e2a21d60520b963aaf6a3127055e7a53c60d6e83:    done           |++++++++++++++++++++++++++++++++++++++| 
+config-sha256:048d80034387d60575b61563b55ecc92a47bd0f8ecda65fa8c6a22b8763e269d:   done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:268833695a7b800774f9f43ca8b6a8d5e593ad141625362713624a22a4ea0144:    done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:99fc70ac0b64db67086f98ceb3942600816eed98046abd6be5ad66f4614a9ca2:    done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:ee68a0599dc5b5a7923eceeeb11438ca200b59261c8c2d8015596a2c7cf97164:    done           |++++++++++++++++++++++++++++++++++++++| 
+layer-sha256:00d2426102087e5a411419f35c9ce1a258f79d89957ccaa4143b5b3d448b44f4:    done           |++++++++++++++++++++++++++++++++++++++| 
+elapsed: 74.7s                                                                    total:  396.7  (5.3 KiB/s)                                       
 unpacking linux/arm/v7 sha256:ee13953704783b284c080b5b0abe4620730728054f5c19e9488d7a97ecd312c5...
 done
 # /mnt/data/ubu-dev/usr/local/bin/ctr -n foo containers create library/redis:alpine r1
