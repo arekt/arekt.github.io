@@ -1,4 +1,4 @@
-## [WIP] LinuxKit - Containers all the way down
+### LinuxKit - Containers all the way down
 
 Arek Turlewicz
 (アレック）
@@ -9,23 +9,105 @@ Arek Turlewicz
 
 ## Introduction
 
-  * Linuxkit
-  * Use cases
-  * Demo
+  ```
+
+
+  # whoami
+  ```
+
+---
+
+  ```
+
+  # whoami
+  arekt
+  ```
+
+---
+
+  - Rails/Ruby developer
+  - AWS Cloud Services
+  - I love eInk devices and RaspberryPi
 
 ---
 
 ## What is LinuxKit?
 
-- Open Containers Initiative
-- https://www.opencontainers.org/
-- https://github.com/opencontainers/runtime-spec/blob/master/config-linux.md
+  - Open Containers Initiative
+  - https://www.opencontainers.org/
 
-- RunC (runtime-spec)
-
-- ContainerD (image-spec)
+  - RunC (runtime-spec)
+  - ContainerD (image-spec)
 
 ---
+
+### Do you have docker installed on your Mac?
+
+  If so, try to type in your terminal
+
+```
+screen ~/Library/Containers \
+  /com.docker.docker/Data/vms/0/tty
+```
+
+---
+
+<img src="linuxkit/images/linuxkit-terminal.png">
+
+---
+
+```
+docker-desktop:/tmp# ctr -n services.linuxkit tasks ls
+TASK                     PID     STATUS
+host-timesync-daemon     1177    RUNNING
+sntpc                    1278    RUNNING
+socks                    1365    STOPPED
+write-and-rotate-logs    1558    RUNNING
+acpid                    1029    RUNNING
+diagnose                 1072    RUNNING
+docker                   1122    RUNNING
+kmsg                     1224    RUNNING
+trim-after-delete        1425    RUNNING
+vpnkit-forwarder         1475    RUNNING
+```
+
+---
+
+### Lets try it
+
+```
+# brew tap linuxkit/linuxkit
+# brew install --HEAD linuxkit
+```
+
+```
+# git clone https://github.com/linuxkit/linuxkit.git
+```
+
+```
+linuxkit build examples/minimal.yaml
+linuxkit run minimal
+```
+  -> Linux machine (Virtual or Baremetal) running containers
+
+---
+
+## RunC
+
+  It's AWESOME !!!
+
+---
+
+## ContainerD
+
+- execution - Provide an extensible execution layer for executing a container
+- cow filesystem - Built in functionality for overlay, aufs, and other copy on write  filesystems for containers
+- distribution - Having the ability to push and pull images as well as operations on images as a first class API object
+- metrics - container-level metrics, cgroup stats, and OOM events
+- networking - creation and management of network interfaces
+- build - Building images as a first class API
+- volumes - Volume management for external data
+- logging - Persisting container logs
 
 ---
 
@@ -34,13 +116,10 @@ Arek Turlewicz
 ```
 cat Dockerfile
 FROM  alpine:latest
-
 COPY  hello_world.sh /
-
 CMD   [ "/hello_world.sh" ]
 
 ```
-
 
 ```
 (ns: getty) linuxkit-025000000002:/containers/services/hello_world# ctr -n servi
@@ -62,51 +141,17 @@ linuxkit run hyperkit -mem 2048 -cpus 2 -disk ubuntu.img minimal
 
 ---
 
-## Useful staff we can do with RunC
-
-  Creating container content from
-  TODO commands to start container
-  Example daemon
-
-
-## Developing IoT projects
-
-Interacting with hardware
-
-It would be nice if we can add some extra modules to the running kernel
-(for example emulate I2C device)
-
-Let's say we have project we interact directly on RaspberryPi
-
-Base system was created with Buildroot, but most of the logic is running inside
-chroot ubuntu environment.
-
-Problems to solve:
-
-- developers sometimes work remotely, don't want to cary hardware with them
-- there is less devices then developers in the company
-- CI environment is on remote server (without access to hardware)
-
----
-
-## commands
-
-```
-i2cdetect -y 1
-docker build -t load_modules .
-docker build -t hello_world  .
-
-```
-
-
----
-
 ## Links
 - https://mobyproject.org/projects/
 - https://github.com/buildroot/buildroot
 - https://github.com/linuxkit/linuxkit
 - https://www.opencontainers.org/
 - https://github.com/opencontainers/runc
+
+
+---
+
+
 - https://dzone.com/articles/containers-with-out-docker
 - http://alokprasad7.blogspot.com/2018/01/fake-i2c-device-i2c-stub.html
 - https://www.systutorials.com/docs/linux/man/8-i2c-stub-from-dump/
@@ -137,3 +182,7 @@ docker build -t hello_world  .
 - http://wiringpi.com/wiringpi-deprecated/
 - https://packages.ubuntu.com/eoan/libwiringpi2
 - https://github.com/containerd/containerd/blob/master/docs/rootless.md
+=======
+- https://chromium.googlesource.com/external/github.com/docker/containerd/
+
+```
