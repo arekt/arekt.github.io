@@ -25,9 +25,9 @@ Arek Turlewicz
 
 ---
 
-  - Rails/Ruby developer
-  - AWS Cloud Services
-  - I love eInk devices and RaspberryPi
+  - Ruby/Rails
+  - AWS Cloud
+  - RaspberryPi
 
 ---
 
@@ -36,6 +36,7 @@ Arek Turlewicz
   If so, try to type in your terminal
 
 ```
+
 screen ~/Library/Containers \
   /com.docker.docker/Data/vms/0/tty
 ```
@@ -75,7 +76,7 @@ vpnkit-forwarder         1475    RUNNING
 
 ---
 
-## RunC
+### RunC
 
   Linux has a lot of features to enhance security:
 
@@ -103,7 +104,7 @@ vpnkit-forwarder         1475    RUNNING
 
 ---
 
-## ContainerD
+### ContainerD
 
 - execution - Provide an extensible execution layer for executing a container
 - cow filesystem - Built in functionality for overlay, aufs, and other copy on write  filesystems for containers
@@ -170,16 +171,15 @@ trust:
 ```
 
 ```
-linuxkit run minimal
-```
+
 # linuxkit build examples/minimal.yml
 # linuxkit run minimal
-
-  -> Linux machine (Virtual or Baremetal) running containers
+```
+  -> Linux machine (Virtual or bare-metal) running containers
 
 ---
 
-## Create hello_world service
+### Create hello_world service
 
 ```
 cat Dockerfile
@@ -211,20 +211,22 @@ hello_world    443    RUNNING
 
 ---
 
-## passing extra options to virtualmachine
+### passing extra options to virtual machine
 
 ```
+
 linuxkit run hyperkit -mem 2048 -cpus 2 -disk ubuntu.img minimal
-
 ```
 
-## Reproducible builds
+---
+
+### Reproducible builds
 
   docs/reproducible-builds.md
 
 ---
 
-## LinuxKit target platforms
+### LinuxKit target platforms
 
 - Azure, GCP, AWS, Packet
 - RaspberryPi3, Qemu, VMware, VirtualBox, HyperKit
@@ -263,7 +265,27 @@ linuxkit run hyperkit -mem 2048 -cpus 2 -disk ubuntu.img minimal
 
 ---
 
+  Did you know you can do this:
+
+```
+cat Dockerfile
+FROM arm32v7/alpine as alpine
+RUN apk add --no-cache python3 make gcc python3-dev linux-headers musl-dev
+RUN pip3 install scrollphat envirophat smbus requests
+
+FROM scratch
+ENTRYPOINT []
+CMD []
+WORKDIR /
+COPY --from=alpine / /alpine
+
+```
+
+---
+
 ### Lets try to run RunC container
+
+  Demo time
 
 ---
 
