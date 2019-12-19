@@ -65,7 +65,7 @@ socks                    1365    STOPPED
 write-and-rotate-logs    1558    RUNNING
 acpid                    1029    RUNNING
 diagnose                 1072    RUNNING
-docker                   1122    RUNNING
+docker                   1122    RUNNING  <-------- docker is here
 kmsg                     1224    RUNNING
 trim-after-delete        1425    RUNNING
 vpnkit-forwarder         1475    RUNNING
@@ -85,7 +85,7 @@ vpnkit-forwarder         1475    RUNNING
 ```
 
 ```
-linuxkit build examples/minimal.yaml
+linuxkit build examples/minimal.yml
 linuxkit run minimal
 ```
   -> Linux machine (Virtual or Baremetal) running containers
@@ -94,7 +94,21 @@ linuxkit run minimal
 
 ## RunC
 
-  It's AWESOME !!!
+  - control groups
+  - namespaces
+  - seccomp
+  - capabilities
+  - apparmor
+
+---
+
+  https://www.docker.com/blog/runc/
+
+  runC is a lightweight, portable container runtime. It includes all of the plumbing code used by Docker to interact with system features related to containers. It is designed with the following principles in mind:
+
+  - Designed for security.
+  - Usable at large scale, in production
+  - No dependency on the rest of the Docker platform: just the container runtime and nothing else.
 
 ---
 
