@@ -88,7 +88,7 @@ vpnkit-forwarder         1475    RUNNING
 
 ---
 
-  Did you every used them?
+  Did you ever used them?
 
 ---
 
