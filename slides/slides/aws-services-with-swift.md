@@ -10,23 +10,55 @@ Arek Turlewicz
 ## 2020
 
   - everyone is using Swift Package Manager
-  - we can share our code easly between MacOS and iOS applications
+  - we can share our code easly between MacOS/ServerSide Swift App and iOS applications
+
+---
 
 ## Reality
 
   - https://github.com/aws-amplify/aws-sdk-ios/issues/313
   - https://github.com/awslabs/aws-mobile-appsync-sdk-ios/issues/288
 
+---
+
 ## Current State
 
   - Carthage (it takes ages to install dependencies)
   - Cocoapods (it will make mess in your xcode configuration)
 
-## Luckly we have alternative choice
+---
+
+### Options with using api
+
+  - http andponint
+  - call lambda function ( we can mix with previous step )
+  - using swift library, so it will work on MacOS and iOS
+  - AWS library already talk to rest API, so we could talk to API directly
+  (require sinature)
+
+---
+
+###
+
+  TODO: maybe is worth to mention STS
+
+
+###
+
+  TODO: difference between Cognito Users and Cognito Identity
+
+---
+
+ TODO: Can we use appsync with https://github.com/swift-aws/aws-sdk-swift ??
+
+---
+
+
+## Using Swift Library
 
   - https://github.com/swift-aws/aws-sdk-swift
 
---
+---
 
   ```
     dependencies: [
@@ -34,8 +66,11 @@ Arek Turlewicz
     ],
   ```
 
---
+---
+
 ## you can install only pieces you need
+
+  and reduce compilation time
 
   ```
     targets: [
@@ -43,13 +78,18 @@ Arek Turlewicz
     ]
   ```
 
+---
 
+### Authentication
+
+  - Use api key
+  - Use hardcoded client key and secret
+  - Call api for cognito
+  - get user oauth token
+
+---
 
 ## Links
-- https://swift.org/download/
-- https://www.digitalocean.com/community/tutorials/how-to-install-swift-and-vapor-on-ubuntu-16-04
-- https://medium.com/@vsemenchenko/compiling-swift-source-270691f31045
+
+- https://github.com/swift-aws/aws-sdk-swift
 - https://swift.org/package-manager/
-- https://github.com/serverless/examples
-- https://medium.com/capital-one-tech/serverless-computing-with-swift-f515ff052919
-- https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
