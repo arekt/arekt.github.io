@@ -7,22 +7,21 @@ Arek Turlewicz
 
 ---
 
-### So how running Swift on Lambda is going?
+before we start
+
+---
+
+### So how running Swift on AWS Lambda is going?
 
 - https://github.com/fabianfett/swift-lambda-runtime
 - https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html
 
+---
+
 ## 2020
 
   - everyone is using Swift Package Manager
-  - we can share our code easly between MacOS/ServerSide Swift App and iOS applications
-
----
-
-## Reality
-
-  - https://github.com/aws-amplify/aws-sdk-ios/issues/313
-  - https://github.com/awslabs/aws-mobile-appsync-sdk-ios/issues/288
+  - we can share our code easly between MacOS, Server Swift and iOS applications
 
 ---
 
@@ -37,28 +36,35 @@ Arek Turlewicz
 
   - AWS resources behind our custom API (HTTP, REST, GraphQL)
   - call lambda function ( we can mix with previous step )
-  - using swift library, so it will work on MacOS and iOS
+  - using Swift library, so it will work on MacOS and iOS
   - AWS library already talk to rest API, so we could talk to API directly
   (require sinature)
 
 
-### AWS Services can be confusing sometimes
+### Authentication/Authorization Services
 
-  STS and Cognito Identity have similar function:
-    retrieve temporary AWS credentials to do some job
+  ## Cognito User Pools and Cognito Identity Pools
 
-
---
-
-  Difference between Cognito User Pools and Cognito Identity Pools
-
----
-
- TODO: Can we use appsync with https://github.com/swift-aws/aws-sdk-swift ??
+  After successfully
+  authenticating a user,
+  Amazon Cognito issues
+  JSON web tokens (JWT)                   <--- Cognito User Pool
+  that you can use to secure
+   and authorize access to your own APIs,
+  or exchange for AWS credentials.        <--- Cognito Identity
 
 ---
 
-## Using Swift Library
+  - if you are using traditional HTTP based API probably you just need Cognito User Pool
+
+  - if you want to access AWS services like S3, or DynamoDB directly, from Swift application you will have to exchange token for AWS Credentials using Cognito Identity
+
+  - in some cases it make sense to create special unauthenticated user that will have
+  permissions to access AWS resources
+
+---
+
+## Using aws-sdk-swift library
 
   - https://github.com/swift-aws/aws-sdk-swift
 
@@ -88,7 +94,7 @@ Arek Turlewicz
 
 ---
 
-## Accessing S3 Objects
+#### Accessing S3 Objects
 
 ```
 import SwiftUI
@@ -130,7 +136,7 @@ struct Storage {
 
 ---
 
-## GraphQL queries through Lambda
+#### GraphQL queries through Lambda
 
 ```
 import Lambda
@@ -176,7 +182,7 @@ struct LambdaRequest<T:Codable> {
 
 ---
 
-## Processing messages in SQS Queues
+#### Processing messages in SQS Queues
 
 ```
 import SwiftUI
@@ -248,18 +254,81 @@ struct MessageQueue {
 
 ```
 
-### Authentication
+## Can we use aws-sdk-swift library to authenticate Cognito User?
 
-  - Use api key
-  - Use hardcoded client key and secret
-  - Call api for cognito
-  - get user oauth token
+---
+
+  hmm...
+
+---
+
+  sorry was watching The Wither recently
+
+---
+
+  ```
+    import CognitoIdentityProvider
+    var cognitoIdentityProvider = CognitoIdentityProvider(region: .apnortheast1)
+    let clientId = "put clientid here"
+    let loginRequest = CognitoIdentityProvider.InitiateAuthRequest(
+      authFlow: .userSrpAuth,
+      authParameters: ["USERNAME": username, "SRP_A": srp_a],
+      clientId: clientId)
+    let promise = cognitoIdentityProvider.initiateAuth(loginRequest)
+  ```
+
+---
+
+  What is SRP_A ?
+
+---
+
+  oh F..
+
+---
+
+  The Secure Remote Password protocol (SRP) is an augmented password-authenticated key agreement (PAKE) protocol, specifically designed to work around existing patents.
+
+---
+
+  Like all PAKE protocols, an eavesdropper or man in the middle cannot obtain enough information to be able to brute force guess a password without further interactions with the parties for each guess. Furthermore, being an augmented PAKE protocol, the server does not store password-equivalent data. This means that an attacker who steals the server data cannot masquerade as the client unless they first perform a brute force search for the password.
+
+
+---
+
+## There is few SRP libraries for Swift
+
+  https://github.com/Bouke/SRP
+  https://github.com/flockoffiles/SwiftySRP
+
+---
+
+## Interesting services/libraries in AWS
+
+### Amplify and AppSync
+
+#### AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
+
+  https://aws-amplify.github.io/docs/ios/start?ref=amplify-iOS-btn
+  https://docs.aws.amazon.com/appsync/latest/devguide/welcome.html
+
+---
+
+### CDK
+
+  https://docs.aws.amazon.com/cdk/latest/guide/home.html
+
+  There is ticket with feature request for Swift support:
+
+  https://github.com/aws/aws-cdk/issues/549
 
 ---
 
 ## Links
+- https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools.html
 - https://github.com/fabianfett/swift-lambda-runtime
 - https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html
 - https://github.com/swift-aws/aws-sdk-swift
 - https://swift.org/package-manager/
 - https://itnext.io/aws-amplify-react-native-authentication-full-setup-7764b452a138
+- https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol
