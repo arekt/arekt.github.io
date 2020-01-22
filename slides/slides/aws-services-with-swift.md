@@ -4,6 +4,7 @@ Arek Turlewicz
 (アレック）
 
 @a_turl
+https://github.com/arekt/
 
 ---
 
@@ -18,14 +19,16 @@ before we start
 
 ---
 
-## 2020
+## Year 2020
 
   - everyone is using Swift Package Manager
   - we can share our code easly between MacOS, Server Swift and iOS applications
 
 ---
 
-## Current State
+## Reality
+
+  We still have a lot of libraries with objective-C dependencies
 
   - Carthage (it takes ages to install dependencies)
   - Cocoapods (it will make mess in your xcode configuration)
@@ -38,8 +41,9 @@ before we start
   - call lambda function ( we can mix with previous step )
   - using Swift library, so it will work on MacOS and iOS
   - AWS library already talk to rest API, so we could talk to API directly
-  (require sinature)
+  (require request signature)
 
+---
 
 ### Authentication/Authorization Services
 
@@ -64,29 +68,32 @@ before we start
 
 ---
 
-## Using aws-sdk-swift library
+### Using aws-sdk-swift library
 
   - https://github.com/swift-aws/aws-sdk-swift
 
 ---
 
-  ```
-    dependencies: [
-        .package(url: "https://github.com/swift-aws/aws-sdk-swift.git", from: "4.0.0")
-    ],
-  ```
+Package.swift
+
+```
+dependencies: [
+  .package(url: "https://github.com/swift-aws/aws-sdk-swift.git",
+    from: "4.0.0")
+],
+```
 
 ---
 
-## you can install only pieces you need
-
+  you can install only pieces you need
   and reduce compilation time
 
-  ```
-    targets: [
-      .target(name: "AppWithAWSResources", dependencies: ["S3", "Lambda"]),
-    ]
-  ```
+```
+targets: [
+  .target(name: "AppWithAWSResources",
+    dependencies: ["S3", "Lambda"]),
+]
+```
 
 ---
 
@@ -136,6 +143,26 @@ struct Storage {
 
 ---
 
+and you can use it like:
+
+```
+  var storage: Storage?
+
+  init() {
+    storage = Storage(bucket: "yourBacketName")
+  }
+
+  func listS3Folder() {
+    storage?.list(path: self.path) { files in
+      self.fileNames = files.map { file in
+        file.key ?? ""
+      }
+    }
+  }
+```
+
+---
+
 #### GraphQL queries through Lambda
 
 ```
@@ -146,6 +173,11 @@ struct Root<T:Codable>: Codable {
   var data: T
 }
 
+```
+
+--
+
+```
 struct LambdaRequest<T:Codable> {
   let lambda = Lambda(region: .apnortheast1)
   var variables: [String:String] = [:]
@@ -162,6 +194,12 @@ struct LambdaRequest<T:Codable> {
       //invocationType: .requestresponse,
       payload: data
     )
+    ...
+```
+
+--
+
+```
     let promise = lambda.invoke(request)
     promise.whenSuccess{ response in
       print("success...")
@@ -178,6 +216,31 @@ struct LambdaRequest<T:Codable> {
     }
   }
 }
+```
+
+---
+
+```
+struct BookReaderView: View {
+  @State var text: String = ""
+  var prevPage = LambdaRequest<PrevPageResponse>(query: "mutation{prevPage{page}}")
+  var openPage = LambdaRequest<BookResponse>(query: "{book{page}}")
+  var nextPage = LambdaRequest<NextPageResponse>(query: "mutation{nextPage{page}}")
+
+```
+
+--
+
+```
+  var body: some View {
+    VStack {
+      TextEditorView(text: $text)
+      HStack{
+        Button(action: {
+          self.prevPage.execute { (response: PrevPageResponse) in
+            self.text = response.prevPage.page
+          }
+        }) { Text("Previous") }
 ```
 
 ---
@@ -213,6 +276,11 @@ struct MessageQueue {
       }
     }
   }
+```
+
+--
+
+```
 
   func sendMessage(text: String) {
     let sendMessageRequest = SQS.SendMessageRequest(
@@ -228,6 +296,11 @@ struct MessageQueue {
       print("error... \(response)")
     }
   }
+```
+
+--
+
+```
 
   func getMessages(successCallback: @escaping (_ text: String) -> Void) {
     let receiveMessageRequest = SQS.ReceiveMessageRequest(
@@ -238,8 +311,6 @@ struct MessageQueue {
     )
     let promise = sqs.receiveMessage(receiveMessageRequest)
     promise.whenSuccess{ response in
-      print("success... received messages")
-      print(response.messages)
       response.messages?.forEach({ message in
         print("message: \(message.body)")
         successCallback(message.body!)
@@ -254,36 +325,34 @@ struct MessageQueue {
 
 ```
 
+---
+
 ## Can we use aws-sdk-swift library to authenticate Cognito User?
 
 ---
 
   hmm...
 
+--
+
+  ...sorry was watching The Wither recently
+
 ---
 
-  sorry was watching The Wither recently
-
----
-
-  ```
-    import CognitoIdentityProvider
-    var cognitoIdentityProvider = CognitoIdentityProvider(region: .apnortheast1)
-    let clientId = "put clientid here"
-    let loginRequest = CognitoIdentityProvider.InitiateAuthRequest(
-      authFlow: .userSrpAuth,
-      authParameters: ["USERNAME": username, "SRP_A": srp_a],
-      clientId: clientId)
-    let promise = cognitoIdentityProvider.initiateAuth(loginRequest)
-  ```
+```
+  import CognitoIdentityProvider
+  var cognitoIdentityProvider = CognitoIdentityProvider(region: .apnortheast1)
+  let clientId = "put clientid here"
+  let loginRequest = CognitoIdentityProvider.InitiateAuthRequest(
+    authFlow: .userSrpAuth,
+    authParameters: ["USERNAME": username, "SRP_A": srp_a],
+    clientId: clientId)
+  let promise = cognitoIdentityProvider.initiateAuth(loginRequest)
+```
 
 ---
 
   What is SRP_A ?
-
----
-
-  oh F..
 
 ---
 
@@ -296,18 +365,30 @@ struct MessageQueue {
 
 ---
 
-## There is few SRP libraries for Swift
+### There is few SRP libraries for Swift
 
   https://github.com/Bouke/SRP
   https://github.com/flockoffiles/SwiftySRP
 
+
 ---
 
-## Interesting services/libraries in AWS
+## Answer:
+
+  We can use Cognito using Swift, but it's little bit harder
+  then with AWS iOS Library.
+
+---
+
+## Other Interesting AWS services/libraries
+
+---
 
 ### Amplify and AppSync
 
-#### AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
+---
+
+### AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
 
   https://aws-amplify.github.io/docs/ios/start?ref=amplify-iOS-btn
   https://docs.aws.amazon.com/appsync/latest/devguide/welcome.html
