@@ -1,0 +1,98 @@
+Introduction:
+  What is LinuxKit?
+    Toolkit to Build immutable linux based Operating Systems
+    (kernel + filesystem)
+
+  LinuxKit components:
+    RunC
+    ContainerD
+
+  LinuxKit configuration:
+    It's just yaml file
+    Services
+    Init
+    Everything is based on docker containers
+
+    input ( YAML Configuration )  ->  [Downloading containers with parts of the filesystem]  ->  output ( filesysytem + kernel + bios )
+
+  LinuxKit default targets:
+    RaspperryPi3
+    AWS EC2
+    Baremetal
+      Arm64
+      AMD64
+
+  How to use it:
+
+    $ linuxkit build linuxkit.yml
+    $ linuxkt run linuxkit.yml
+
+  From where take configuration:
+
+    https://github.com/linuxkit/linuxkit/tree/master/examples
+
+
+  What if your hardware is not supported?:
+    - Add support to your device
+    - mostly it's just bunch of Dockerfile configurations
+    - and little bit go code
+
+  What if you don't want to add new hardware?:
+   - It's still pretty good thing to learn about Docker, Linux and Security
+   - Scripts to extract mainstream kernels
+   - It could be useful as developer tool
+   - Or part of the current development cicle
+
+
+
+  Other:
+    ## Developing IoT projects
+
+    Interacting with hardware
+
+    It would be nice if we can add some extra modules to the running kernel
+    (for example emulate I2C device)
+
+    Let's say we have project we interact directly on RaspberryPi
+
+    Base system was created with Buildroot, but most of the logic is running inside
+    chroot ubuntu environment.
+
+    Problems to solve:
+
+    - developers sometimes work remotely, don't want to cary hardware with them
+    - there is less devices then developers in the company
+    - CI environment is on remote server (without access to hardware)
+
+Reaserch:
+- https://dzone.com/articles/containers-with-out-docker
+- http://alokprasad7.blogspot.com/2018/01/fake-i2c-device-i2c-stub.html
+- https://www.systutorials.com/docs/linux/man/8-i2c-stub-from-dump/
+- https://www.cyberciti.biz/tips/build-linux-kernel-module-against-installed-kernel-source-tree.html
+  # load extra modules linuxkit
+- https://github.com/linuxkit/linuxkit/issues/2128
+- https://github.com/gw0/docker-alpine-kernel-modules
+- https://www.ianlewis.org/en/container-runtimes-part-3-high-level-runtimes
+
+### other links
+  # Namespaces
+- https://de.pinout.xyz/pinout/enviro_phat#
+- https://medium.com/@tonistiigi/experimenting-with-rootless-docker-416c9ad8c0d6
+- https://docs.docker.com/engine/security/userns-remap/
+  # Singularity
+- https://sylabs.io/guides/3.5/user-guide/installation.html
+- http://collabnix.com/installing-docker-18-09-3-on-raspberry-pi-in-2-minutes/
+- https://github.com/linuxkit/linuxkit/blob/master/docs/platform-aws.md
+- https://collabnix.com/building-linuxkit-os-on-raspberry-pi/
+- https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial/all
+- https://eraretuya.github.io/2016/12/10/the-i2c-stub-in-action/
+- https://github.com/leon-anavi/rpi-examples/blob/master/BMP280/c/BMP280.c
+  # wiringPi and alternatives
+- https://qiita.com/myasu/items/e3f81b2826ed5797a040
+- http://wiringpi.com/wiringpi-deprecated/
+- https://packages.ubuntu.com/eoan/libwiringpi2
+
+## containerd as non-root user
+- https://github.com/containerd/containerd/blob/master/docs/rootless.md
+- https://www.slideshare.net/AkihiroSuda/rootless-containers
+- https://github.com/rootless-containers/rootlesskit
