@@ -28,10 +28,17 @@ before we start
 
 ## Reality
 
-  We still have a lot of libraries with objective-C dependencies
-
-  - Carthage (it takes ages to install dependencies)
+  - We still have a lot of libraries with objective-C dependencies
+  - Carthage (it takes even more time to install dependencies)
   - Cocoapods (it will make mess in your xcode configuration)
+
+--
+
+but is getting better:
+
+  - SPM support in XCode
+  - SwiftUI
+  - server side Swift ecosystem is growing, more pure Swift libraries
 
 ---
 
@@ -47,15 +54,21 @@ before we start
 
 ### Authentication/Authorization Services
 
-  ## Cognito User Pools and Cognito Identity Pools
+---
 
+## Cognito User Pools and Cognito Identity Pools
+
+```text
   After successfully
   authenticating a user,
   Amazon Cognito issues
   JSON web tokens (JWT)                   <--- Cognito User Pool
   that you can use to secure
    and authorize access to your own APIs,
+```
+```text
   or exchange for AWS credentials.        <--- Cognito Identity
+```
 
 ---
 
@@ -65,6 +78,23 @@ before we start
 
   - in some cases it make sense to create special unauthenticated user that will have
   permissions to access AWS resources
+
+  - or use AWS Credentials directly for example passed through environment
+
+--
+
+  - It might me worth to check STS as well.
+  - AWS Account Root User Credentials vs. IAM User Credentials
+
+--
+
+```
+cat ~/.aws/credentials
+
+[default]
+aws_access_key_id = AKIA.....
+aws_secret_access_key = your_secret_key
+```
 
 ---
 
@@ -85,7 +115,7 @@ dependencies: [
 
 ---
 
-  you can install only pieces you need
+  You can install only modules you need
   and reduce compilation time
 
 ```
@@ -223,9 +253,12 @@ struct LambdaRequest<T:Codable> {
 ```
 struct BookReaderView: View {
   @State var text: String = ""
-  var prevPage = LambdaRequest<PrevPageResponse>(query: "mutation{prevPage{page}}")
-  var openPage = LambdaRequest<BookResponse>(query: "{book{page}}")
-  var nextPage = LambdaRequest<NextPageResponse>(query: "mutation{nextPage{page}}")
+  var prevPage = LambdaRequest<PrevPageResponse>(
+    query: "mutation{prevPage{page}}")
+  var openPage = LambdaRequest<BookResponse>(
+    query: "{book{page}}")
+  var nextPage = LambdaRequest<NextPageResponse>(
+    query: "mutation{nextPage{page}}")
 
 ```
 
@@ -358,24 +391,26 @@ struct MessageQueue {
 
   The Secure Remote Password protocol (SRP) is an augmented password-authenticated key agreement (PAKE) protocol, specifically designed to work around existing patents.
 
+--
+
+  Like all PAKE protocols, an eavesdropper or man in the middle cannot obtain enough information to be able to brute force guess a password without further interactions with the parties for each guess.
+
+--
+
+  Furthermore, being an augmented PAKE protocol, the server does not store password-equivalent data. This means that an attacker who steals the server data cannot masquerade as the client unless they first perform a brute force search for the password.
+
 ---
 
-  Like all PAKE protocols, an eavesdropper or man in the middle cannot obtain enough information to be able to brute force guess a password without further interactions with the parties for each guess. Furthermore, being an augmented PAKE protocol, the server does not store password-equivalent data. This means that an attacker who steals the server data cannot masquerade as the client unless they first perform a brute force search for the password.
+### There are a few SRP libraries for Swift
 
-
----
-
-### There is few SRP libraries for Swift
-
-  https://github.com/Bouke/SRP
-  https://github.com/flockoffiles/SwiftySRP
-
+  - https://github.com/Bouke/SRP
+  - https://github.com/flockoffiles/SwiftySRP
 
 ---
 
 ## Answer:
 
-  We can use Cognito using Swift, but it's little bit harder
+  We can use Cognito with Swift, but it's little bit harder
   then with AWS iOS Library.
 
 ---
@@ -388,10 +423,12 @@ struct MessageQueue {
 
 ---
 
-### AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
+  AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
 
-  https://aws-amplify.github.io/docs/ios/start?ref=amplify-iOS-btn
-  https://docs.aws.amazon.com/appsync/latest/devguide/welcome.html
+--
+
+  - https://aws-amplify.github.io/docs/ios/start?ref=amplify-iOS-btn
+  - https://docs.aws.amazon.com/appsync/latest/devguide/welcome.html
 
 ---
 
@@ -410,6 +447,9 @@ struct MessageQueue {
 - https://github.com/fabianfett/swift-lambda-runtime
 - https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html
 - https://github.com/swift-aws/aws-sdk-swift
+
+--
+
 - https://swift.org/package-manager/
 - https://itnext.io/aws-amplify-react-native-authentication-full-setup-7764b452a138
 - https://en.wikipedia.org/wiki/Secure_Remote_Password_protocol
